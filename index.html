@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0a1a">
+<title>EDC KOREA 2026 Timetable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--mu:#a29ec2;--disp:"Anton","Bebas Neue",Impact,"Arial Narrow",sans-serif;--body:"Space Grotesk","Pretendard","Noto Sans KR",-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{background:radial-gradient(70% 380px at 85% 0,#5b2a8a77,transparent),radial-gradient(60% 300px at 0 120px,#1b3a9a44,transparent),#0b0a1a;color:#fff;font-family:var(--body);min-height:100vh;padding:env(safe-area-inset-top) 8px calc(env(safe-area-inset-bottom) + 24px)}
+.hero{position:relative;height:132px;overflow:hidden;margin:10px 0 6px}
+.bloom{position:absolute;right:-40px;top:-34px;width:185px;opacity:.85}
+.big{position:absolute;left:0;top:-4px;font:400 84px/1.1 var(--disp);background:linear-gradient(180deg,#ffd23f 5%,#ff4f9a 60%,#b57cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.meta{position:absolute;left:86px;top:6px}
+.meta b{display:block;font:400 30px/1 var(--disp);letter-spacing:2px}
+.meta span{font-weight:700;font-size:16px;letter-spacing:3px;color:#ff9ec7}
+.pills{position:absolute;left:0;bottom:6px;display:flex;gap:8px}
+.pills em{font-style:normal;font-weight:700;font-size:12px;letter-spacing:1px;border:1.5px solid #fff9;border-radius:99px;padding:6px 12px}
+.pills em.f{border:0;background:linear-gradient(90deg,#ff4f9a,#b57cff)}
+.tabs{display:flex;gap:8px;margin:6px 0 14px}
+.tabs button{flex:1;background:#ffffff14;color:#fff;border:1.5px solid #ffffff22;border-radius:12px;padding:10px;font:700 15px var(--body)}
+.tabs button.on{background:linear-gradient(90deg,#ff4f9a,#b57cff);border-color:transparent}
+.wrap{margin:0}
+.tt{display:grid;grid-template-columns:30px repeat(5,minmax(0,1fr));gap:3px}
+.hd{padding-bottom:4px;border-bottom:3px solid var(--c);text-align:center;font:400 12.5px/1.15 var(--disp);letter-spacing:.2px;text-transform:uppercase;color:#e6e3f7}
+.hd b{display:block;font:inherit;color:var(--c)}
+.col{position:relative;height:calc(var(--H)*1px);background-image:linear-gradient(#ffffff0d 1px,transparent 1px)}
+.hr{position:absolute;left:0;font-size:10px;font-weight:700;color:var(--mu);transform:translateY(-7px)}
+.b{position:absolute;left:0;right:0;border-radius:6px;overflow:hidden;cursor:pointer;background:#1c1937;border:1px solid #ffffff14;border-left:3px solid rgba(var(--rgb),.5);color:#f1effc;-webkit-tap-highlight-color:transparent;}
+.b img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.4}
+.b.hasimg::after{content:"";position:absolute;inset:0;background:linear-gradient(#1c193766,#1c1937e6)}
+.tx{position:absolute;inset:4px;z-index:2;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.tx i{font:700 10.5px/1.15 var(--body);font-style:normal;color:#a9a5c6}
+.tx i s{display:block;text-decoration:none;font:inherit}
+.tx span{display:block;font:400 var(--nfs,11px)/1.08 var(--disp);text-transform:uppercase;overflow-wrap:break-word;hyphens:manual}
+.b.sel{background:linear-gradient(rgba(var(--rgb),.26),rgba(var(--rgb),.26)),#1c1937;border-color:var(--c);box-shadow:0 0 12px rgba(var(--rgb),.45);z-index:2}
+.b.sel.hasimg::after{background:linear-gradient(rgba(var(--rgb),.2),rgba(var(--rgb),.45))}
+.nm{min-width:0}
+.nm em{display:block;font:500 8.5px/1.25 var(--body);font-style:normal;color:#8f8bb0;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b.conf{outline:2px solid #ff3b3b;outline-offset:1px}
+.panel{margin-top:20px;background:#ffffff10;border-radius:16px;padding:14px}
+.panel h2{font:400 18px var(--disp);letter-spacing:1px;margin-bottom:4px}
+.it{display:flex;align-items:center;gap:8px;padding:7px 0 7px 9px;border-top:1px solid #ffffff14;border-left:3px solid var(--c);margin-top:6px;border-radius:4px}
+.it .m{flex:1;min-width:0}
+.it .t{color:var(--mu);font-weight:700;font-size:11px}
+.it .n{font:400 15px/1.15 var(--disp);letter-spacing:.3px;overflow-wrap:anywhere;margin-top:1px}
+.it .s{font:500 11px var(--body);color:var(--mu);margin-top:1px}
+.it a{flex:none;color:#fff;background:#ffffff1c;border-radius:7px;padding:5px 8px;font-size:10.5px;font-weight:700;text-decoration:none}
+.warn{color:#ff8a8a;font:600 10.5px/1.35 var(--body);margin-top:3px}
+.empty{color:var(--mu);font-size:13px;padding:6px 0}
+.act{display:flex;gap:8px;margin-top:12px}
+.act button{flex:1;background:#ffffff18;border:0;color:#fff;border-radius:10px;padding:11px;font:700 14px var(--body)}
+#exp{background:linear-gradient(90deg,#ff4f9a,#b57cff)}
+.ex{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:9;padding:12px}
+.exb{background:#1e1838;border-radius:14px;padding:12px;max-width:420px;width:100%;max-height:95vh;display:flex;flex-direction:column;gap:10px}
+.exo{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px}
+.exo button{background:#ffffff18;color:#fff;border:0;border-radius:99px;padding:7px 12px;font-size:12px}
+.exo button.on{background:#ff5c8a}
+#pv{max-height:62vh;max-width:100%;object-fit:contain;align-self:center;border-radius:8px;min-height:80px}
+.hint{font-size:11px;color:var(--mu);text-align:center}
+</style>
+</head>
+<body>
+<header class="hero" id="hero"></header>
+<div class="tabs" id="tabs"></div>
+<div class="wrap"><div class="tt" id="tt"></div></div>
+<div class="panel">
+  <h2>MY LINEUP</h2>
+  <div id="list"></div>
+  <div class="act"><button id="exp">이미지로 저장</button><button id="clr">전체 해제</button></div>
+</div>
+<div class="ex" id="ex"><div class="exb"><div class="exo"><button data-sz="1920" class="on">인스타 스토리 9:16</button><button data-sz="2280">폰 배경화면</button><label><input type="checkbox" id="ck"> 잠금화면 시계 자리 비우기</label></div><img id="pv" alt=""><div class="hint">다운로드가 안 되면 이미지를 길게 눌러 저장하세요</div><div class="act"><button id="sv">이미지 다운로드</button><button id="cl">닫기</button></div></div></div>
+<script>
+/* ===== 데이터 (공식 타임테이블) =====
+   각 줄: "시작-종료 이름". 선택은 이름이 아니라 슬롯(요일+스테이지+순서) 단위라
+   같은 DJ가 여러 번 나와도 각각 따로 선택됩니다.
+   DJ 이미지: images/ 폴더에 이름을 소문자-하이픈으로 바꾼 파일을 넣으세요. (예: images/dj-snake.jpg)
+   다른 확장자/외부 URL을 쓰려면 아래 IMG에 "이름":"주소"를 추가하세요. */
+const IMG={};
+const STAGES=[["k","kinetic","FIELD","#ffc933"],["c","circuit","GROUNDS","#33d6ff"],["s","stereo","BLOOM","#ff4f9a"],["j","bionic","JUNGLE","#7dff3a"],["a","boombox","ART CAR","#b57cff"]];
+const DAYS=[
+{key:"10.3 토",title:"SATURDAY · OCT 3",
+k:`17:00-18:00 HOHO ONE
+18:00-19:00 SUNGYOO
+19:00-20:00 MUZIE
+20:00-21:00 KREAM
+21:00-22:00 DIMENSION
+22:00-23:07 R3HAB
+23:12-00:27 SUBTRONICS
+00:30-01:45 ILLENIUM B2B DABIN
+01:45-03:00 DJ SNAKE`,
+c:`17:00-18:15 ASHIKO
+18:15-19:15 CHEEZ & YUKA
+19:15-20:15 WAY2_X
+20:15-21:15 JESSICA AUDIFFRED
+21:15-22:15 WILLIAM BLACK
+22:15-23:15 ALLEYCVT
+23:15-00:15 THE OUTLAW
+00:15-01:30 SVDDEN DEATH
+01:30-03:00 SARA LANDRY`,
+s:`17:00-18:00 AUREDE
+18:00-19:00 SSOMBO
+19:00-20:00 BASSKRAP
+20:00-21:00 OGUZ
+21:00-22:00 DØMINA
+22:00-23:15 ANIME
+23:15-00:30 BEN NICKY PRESENTS XTREME
+00:30-01:45 BRENNAN HEART
+01:45-03:00 COONE`,
+j:`17:00-18:15 ONE1
+18:15-19:30 DAVICO B3B DEMUK B3B DEPARTS
+19:30-20:45 YUUKI YOSHIYAMA
+20:45-22:00 IDEMI
+22:00-23:15 33 BELOW
+23:15-00:30 AYYBO
+00:30-01:45 RIORDAN
+01:45-03:00 WAX MOTIF`,
+a:`17:00-18:15 HONGTON_E
+18:15-19:30 MONSTER
+19:30-20:45 LOCO SOOUND
+20:45-22:00 BETTER
+22:00-23:15 SPACECOWBOY
+23:15-00:30 MUZIE
+00:30-01:45 ROM&BAAWLA
+01:45-03:00 SIM X PINO`},
+{key:"10.4 일",title:"SUNDAY · OCT 4",
+k:`17:00-18:00 4URA
+18:00-19:00 SPECT
+19:00-20:00 PLUKO
+20:00-21:00 TOKIMONSTA
+21:00-22:00 ARGY
+22:00-23:15 ALOK
+23:15-00:25 W&W
+00:30-01:45 FISHER
+01:45-03:00 TIËSTO`,
+c:`17:00-18:00 ELIANA
+18:00-19:00 BLOSSO
+19:00-20:00 AREA X
+20:00-21:00 NO1 (HONGJOONG)
+21:00-22:05 BOU
+22:05-23:10 LEVEL UP
+23:10-00:25 TROYBOI
+00:25-01:40 NICO MORENO
+01:45-03:00 WOOLI`,
+s:`17:00-18:00 CASEPEAT X PURPLE RABBIT
+18:00-19:00 KAGO PENGCHI
+19:00-20:00 PAUL EUN
+20:00-21:00 MATTY RALPH
+21:00-22:15 ALY & FILA
+22:15-23:30 MARIE VAUNT
+23:30-00:45 COSMIC GATE
+00:45-01:45 VINI VICI
+01:45-03:00 NIFRA`,
+j:`17:00-18:15 SORAERE BROCKEN
+18:15-19:30 ZENA
+19:30-20:45 ASTRO VOIZE
+20:45-22:00 YOUNA
+22:00-23:15 KAYZO
+23:15-00:30 CHARLIE SPARKS
+00:30-01:45 LILLY PALMER
+01:45-03:00 999999999`,
+a:`17:00-18:15 KYSS
+18:15-19:30 HWAII
+19:30-20:45 MULE
+20:45-22:00 DJ HAO
+22:00-23:15 KWON YEONSU
+23:15-00:30 NAN AH
+00:30-01:45 PONGPONG
+01:45-03:00 KIANN`}
+];
+const $=id=>document.getElementById(id);
+DAYS[0].num="03";DAYS[0].dow="SATURDAY";DAYS[1].num="04";DAYS[1].dow="SUNDAY";
+const GENRE={"DIMENSION":"Drum & bass","R3HAB":"House","SUBTRONICS":"Dubstep","ILLENIUM B2B DABIN":"Melodic bass","DJ SNAKE":"Trap / Dance","JESSICA AUDIFFRED":"Bass","WILLIAM BLACK":"Melodic bass","ALLEYCVT":"Bass","THE OUTLAW":"Bass","SVDDEN DEATH":"Dubstep","SARA LANDRY":"Hard techno","OGUZ":"Techno","BEN NICKY PRESENTS XTREME":"Hard dance","BRENNAN HEART":"Hardstyle","COONE":"Hardstyle","WAX MOTIF":"House","AYYBO":"House","RIORDAN":"House",
+"TOKIMONSTA":"Electronic","ARGY":"Melodic techno","ALOK":"Brazilian bass","W&W":"Big room","FISHER":"Tech house","TIËSTO":"House","BOU":"Drum & bass","LEVEL UP":"Bass","TROYBOI":"Trap / Bass","NICO MORENO":"Techno","WOOLI":"Bass","CASEPEAT X PURPLE RABBIT":"Trance","KAGO PENGCHI":"Trance","PAUL EUN":"Trance","MATTY RALPH":"Trance","ALY & FILA":"Trance","MARIE VAUNT":"Trance","COSMIC GATE":"Trance","VINI VICI":"Psytrance","NIFRA":"Trance","KAYZO":"Bass / Hardstyle","CHARLIE SPARKS":"Techno","LILLY PALMER":"Techno","999999999":"Techno","NO1 (HONGJOONG)":"K-pop"};
+/* 장르 표기는 위 GENRE에서 수정/추가하세요. 비어 있는 DJ는 장르 미표기입니다. */
+const SOFT={"SUBTRONICS":"SUB|TRONICS","ROM&BAAWLA":"ROM&|BAAWLA","TOKIMONSTA":"TOKI|MONSTA","SPACECOWBOY":"SPACE|COWBOY","(HONGJOONG)":"(HONG|JOONG)"};
+const nameHTML=n=>n.split(" ").map(w=>esc(SOFT[w]||w).replace("|","&shy;")).join(" ");
+const DISP='"Anton","Bebas Neue",Impact,"Arial Narrow",sans-serif',BODY='"Space Grotesk","Pretendard","Noto Sans KR",sans-serif';
+const PX=1.55,START=17*60,END=27*60,H=(END-START)*PX;
+const mm=t=>{let[h,m]=t.split(":").map(Number);if(h<17)h+=24;return h*60+m};
+const slug=n=>n.replace(/Ø/g,"O").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+DAYS.forEach((d,di)=>{d.slots=[];STAGES.forEach(s=>d[s[0]].split("\n").forEach((l,i)=>{
+  const m=l.match(/^(\d\d:\d\d)-(\d\d:\d\d) (.+)$/);
+  d.slots.push({id:`${di}-${s[0]}-${i}`,st:s,a0:m[1],a1:m[2],s:mm(m[1]),e:mm(m[2]),n:m[3]});
+}))});
+const rgb=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));
+const rgba=(h,a)=>`rgba(${rgb(h)},${a})`;
+const hash=n=>[...n].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
+const mono=n=>n.replace(/[^A-Z0-9Ø ]/gi,"").split(" ").filter(Boolean).slice(0,2).map(w=>w[0]).join("")||n[0];
+let di=0,sel=[];
+try{sel=JSON.parse(localStorage.getItem("edc26v2"))}catch(e){}
+if(!Array.isArray(sel))sel=[];
+const save=()=>{try{localStorage.setItem("edc26v2",JSON.stringify(sel))}catch(e){}};
+const imgSrc=n=>IMG[n]||`images/${slug(n)}.jpg`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const bloomSVG=()=>{let p="";for(let i=0;i<12;i++)p+=`<ellipse cy="-58" rx="17" ry="44" fill="${STAGES[i%5][3]}" opacity=".5" transform="rotate(${i*30})"/>`;
+  return `<svg class="bloom" viewBox="-110 -110 220 220"><g style="mix-blend-mode:screen">${p}</g><circle r="22" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><circle r="8" fill="#fff" fill-opacity=".85"/></svg>`};
+
+function render(){ // 날짜 전환 때만 전체를 그림
+  const D=DAYS[di];
+  $("hero").innerHTML=bloomSVG()+`<div class="big">${D.num}</div><div class="meta"><b>OCT</b><span>${D.dow}</span></div><div class="pills"><em>EDC KOREA 2026</em><em class="f" id="cnt"></em></div>`;
+  $("tabs").innerHTML=DAYS.map((d,i)=>`<button class="${i===di?"on":""}" data-d="${i}">${d.key}</button>`).join("");
+  let hrs="";for(let t=START;t<=END;t+=60)hrs+=`<div class="hr" style="top:${(t-START)*PX}px">${String(Math.floor(t/60)%24).padStart(2,"0")}:00</div>`;
+  let h=`<div></div>`+STAGES.map(s=>`<div class="hd" style="--c:${s[3]}">${s[1]}<b>${s[2]}</b></div>`).join("")+`<div class="col" style="--H:${H};background-image:none">${hrs}</div>`;
+  STAGES.forEach(s=>{
+    h+=`<div class="col" style="--H:${H};--c:${s[3]};--rgb:${rgb(s[3])};background-size:100% ${60*PX}px">`+D.slots.filter(x=>x.st===s).map(x=>{
+      const gn=GENRE[x.n];
+      return `<div class="b hasimg" data-id="${x.id}" style="top:${(x.s-START)*PX}px;height:${(x.e-x.s)*PX-2}px"><img src="${imgSrc(x.n)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('hasimg');this.remove()"><div class="tx"><i>${x.a0}<s>–${x.a1}</s></i><div class="nm"><span>${nameHTML(x.n)}</span>${gn?`<em>${esc(gn)}</em>`:""}</div></div></div>`}).join("")+"</div>";
+  });
+  $("tt").innerHTML=h;
+  update();fitNames();
+}
+function fitNames(){ // 모든 DJ명을 같은 크기로: 가장 긴 단어가 칸에 들어가는 크기를 한 번 계산
+  const b=document.querySelector(".b");if(!b||!b.clientWidth)return;
+  const c=document.createElement("canvas").getContext("2d");c.font=`400 100px ${DISP}`;let mx=1;
+  DAYS.forEach(d=>d.slots.forEach(x=>x.n.toUpperCase().split(" ").forEach(w=>(SOFT[w]||w).split("|").forEach(p=>{mx=Math.max(mx,c.measureText(p+(SOFT[w]?"-":"")).width)}))));
+  document.documentElement.style.setProperty("--nfs",Math.max(8,Math.min(14,(b.clientWidth-8)*100/mx*.97))+"px");
+}
+function update(){ // 선택 변경: 클래스와 하단 목록만 갱신
+  const D=DAYS[di];
+  const mine=D.slots.filter(s=>sel.includes(s.id)).sort((a,b)=>a.s-b.s);
+  const conf=new Set();
+  mine.forEach((a,i)=>mine.slice(i+1).forEach(b=>{if(b.s<a.e&&a.s<b.e){conf.add(a.id);conf.add(b.id)}}));
+  $("cnt").textContent=`MY LINEUP · ${mine.length}`;
+  document.querySelectorAll(".b").forEach(b=>{const on=sel.includes(b.dataset.id);b.classList.toggle("sel",on);b.classList.toggle("conf",on&&conf.has(b.dataset.id))});
+  $("list").innerHTML=mine.length?mine.map(x=>{
+    const c=mine.filter(o=>o!==x&&o.s<x.e&&x.s<o.e);
+    const q=encodeURIComponent(x.n.replace(/ B[23]B | X /g," ")+" live set"),sc=encodeURIComponent(x.n.replace(/ B[23]B | X /g," "));
+    return `<div class="it" style="--c:${x.st[3]}"><div class="m"><div class="t">${x.a0}–${x.a1} · ${x.st[1]} ${x.st[2]}</div><div class="n">${esc(x.n)}</div>${GENRE[x.n]?`<div class="s">${esc(GENRE[x.n])}</div>`:""}${c.length?`<div class="warn">⚠ 겹침: ${c.map(o=>esc(o.n)+" - "+o.st[1]+" "+o.st[2]).join(" / ")}</div>`:""}</div><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${q}">YouTube</a><a target="_blank" rel="noopener" href="https://soundcloud.com/search?q=${sc}">SoundCloud</a></div>`}).join(""):`<div class="empty">타임테이블에서 아티스트를 눌러 선택하세요.</div>`;
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-d]"),b=e.target.closest(".b");
+  if(t){di=+t.dataset.d;render();return}
+  if(b){const i=sel.indexOf(b.dataset.id);i>=0?sel.splice(i,1):sel.push(b.dataset.id);save();update()}
+});
+$("clr").onclick=()=>{const ids=DAYS[di].slots.map(s=>s.id);sel=sel.filter(i=>!ids.includes(i));save();update()};
+
+/* ===== 이미지 저장 (캔버스) ===== */
+let ex={size:1920,clock:false},exBlob,exURL;
+const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);setTimeout(()=>r(null),4000);i.src=src});
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function wrap(c,t,w){const L=[];let l="";t.split(" ").forEach(x=>{const y=l?l+" "+x:x;if(c.measureText(y).width>w&&l){L.push(l);l=x}else l=y});L.push(l);return L}
+function bloomC(c,cx,cy,r){c.save();c.translate(cx,cy);c.globalCompositeOperation="lighter";c.globalAlpha=.4;
+  for(let i=0;i<12;i++){c.save();c.rotate(i*Math.PI/6);c.fillStyle=STAGES[i%5][3];c.beginPath();c.ellipse(0,-r*.53,r*.155,r*.4,0,0,7);c.fill();c.restore()}
+  c.globalAlpha=.6;c.strokeStyle="#fff";c.lineWidth=3;c.beginPath();c.arc(0,0,r*.2,0,7);c.stroke();c.fillStyle="#fff";c.beginPath();c.arc(0,0,r*.07,0,7);c.fill();c.restore()}
+async function draw(){
+  try{await Promise.all([document.fonts.load(`400 40px ${DISP}`),document.fonts.load(`700 20px ${BODY}`)])}catch(e){}
+  const D=DAYS[di],W=1080,HH=ex.size,cv=document.createElement("canvas");cv.width=W;cv.height=HH;const c=cv.getContext("2d");
+  const imgs={};await Promise.all([...new Set(D.slots.map(s=>s.n))].map(async n=>{imgs[n]=await loadImg(imgSrc(n))}));
+  c.fillStyle="#0b0a1a";c.fillRect(0,0,W,HH);
+  let g=c.createRadialGradient(W*.85,0,0,W*.85,0,700);g.addColorStop(0,"rgba(106,42,128,.7)");g.addColorStop(1,"rgba(106,42,128,0)");c.fillStyle=g;c.fillRect(0,0,W,HH);
+  const mine=D.slots.filter(s=>sel.includes(s.id)),y0=ex.clock?400:60;
+  bloomC(c,W-150,y0+85,200);
+  c.textAlign="left";c.font=`400 200px ${DISP}`;
+  g=c.createLinearGradient(0,y0,0,y0+160);g.addColorStop(0,"#ffd23f");g.addColorStop(.6,"#ff4f9a");g.addColorStop(1,"#b57cff");c.fillStyle=g;c.fillText(D.num,40,y0+155);
+  const nw=c.measureText(D.num).width;
+  c.fillStyle="#fff";c.font=`400 68px ${DISP}`;c.fillText("OCT",40+nw+28,y0+75);
+  c.fillStyle="#ff9ec7";c.font=`700 28px ${BODY}`;c.fillText(D.dow,40+nw+30,y0+120);
+  c.font=`700 24px ${BODY}`;const t1="EDC KOREA 2026",t2=`MY LINEUP · ${mine.length}`,py=y0+190,ph=50,w1=c.measureText(t1).width+44,w2=c.measureText(t2).width+44;
+  rr(c,40,py,w1,ph,25);c.strokeStyle="rgba(255,255,255,.6)";c.lineWidth=2;c.stroke();c.fillStyle="#fff";c.fillText(t1,62,py+33);
+  g=c.createLinearGradient(40+w1+12,0,40+w1+12+w2,0);g.addColorStop(0,"#ff4f9a");g.addColorStop(1,"#b57cff");rr(c,40+w1+12,py,w2,ph,25);c.fillStyle=g;c.fill();c.fillStyle="#fff";c.fillText(t2,62+w1+12,py+33);
+  const hy=py+ph+40,gy=hy+74,gb=HH-50,ppm=(gb-gy)/600,x0=66,cw=(W-16-x0-24)/5;
+  let nfs=34;for(;nfs>=17;nfs--){c.font=`400 ${nfs}px ${DISP}`;if(D.slots.every(sl=>{const L=wrap(c,sl.n,cw-28);return L.every(l=>c.measureText(l).width<=cw-28)&&L.length*(nfs+4)+54+(GENRE[sl.n]?26:0)<=(sl.e-sl.s)*ppm-5}))break}
+  c.textAlign="right";c.fillStyle="#a29ec2";c.font=`700 19px ${BODY}`;
+  for(let t=START;t<=END;t+=60)c.fillText(String(Math.floor(t/60)%24).padStart(2,"0")+":00",x0-10,gy+(t-START)*ppm+7);
+  STAGES.forEach((st,i)=>{
+    const bx=x0+i*(cw+6),col=st[3];
+    c.textAlign="left";c.font=`400 30px ${DISP}`;c.fillStyle="#e6e3f7";c.fillText(st[1].toUpperCase(),bx,hy+4);c.fillStyle=col;c.fillText(st[2],bx,hy+38);c.fillRect(bx,hy+50,cw,5);
+    D.slots.filter(x=>x.st===st).forEach(sl=>{
+      const on=sel.includes(sl.id),im=imgs[sl.n],by=gy+(sl.s-START)*ppm,bh=(sl.e-sl.s)*ppm-5;
+      if(on){c.save();c.shadowColor=col;c.shadowBlur=20;rr(c,bx,by,cw,bh,10);c.fillStyle="#1c1937";c.fill();c.restore()}
+      c.save();rr(c,bx,by,cw,bh,10);c.clip();
+      c.fillStyle="#1c1937";c.fillRect(bx,by,cw,bh);
+      if(im){const k=Math.max(cw/im.width,bh/im.height);c.globalAlpha=.4;c.drawImage(im,bx+(cw-im.width*k)/2,by+(bh-im.height*k)/2,im.width*k,im.height*k);c.globalAlpha=1}
+      if(on){c.fillStyle=rgba(col,.26);c.fillRect(bx,by,cw,bh)}
+      c.fillStyle=on?col:rgba(col,.5);c.fillRect(bx,by,6,bh);
+      c.restore();
+      rr(c,bx+1,by+1,cw-2,bh-2,10);c.strokeStyle=on?col:"rgba(255,255,255,.08)";c.lineWidth=on?3:2;c.stroke();
+      c.textAlign="left";
+      c.fillStyle="#a9a5c6";c.font=`700 22px ${BODY}`;c.fillText(`${sl.a0}–${sl.a1}`,bx+16,by+32);
+      const gn=GENRE[sl.n],gh=gn?26:0;
+      c.fillStyle="#f1effc";
+      c.font=`400 ${nfs}px ${DISP}`;const L=wrap(c,sl.n,cw-28),fs=nfs;
+      L.forEach((t,k)=>c.fillText(t,bx+16,by+bh-14-gh-(L.length-1-k)*(fs+4)));
+      if(gn){c.fillStyle="#8f8bb0";c.font=`500 19px ${BODY}`;c.fillText(gn,bx+16,by+bh-14)}
+    c.stroke();
+    });
+  });
+  return cv;
+}
+async function refresh(){
+  const cv=await draw();
+  exBlob=await new Promise(r=>cv.toBlob(r,"image/png"));
+  if(exURL)URL.revokeObjectURL(exURL);
+  exURL=URL.createObjectURL(exBlob);$("pv").src=exURL;
+}
+$("exp").onclick=()=>{$("ex").style.display="flex";refresh()};
+$("cl").onclick=()=>{$("ex").style.display="none"};
+$("ck").onchange=e=>{ex.clock=e.target.checked;refresh()};
+document.querySelectorAll("[data-sz]").forEach(b=>b.onclick=()=>{ex.size=+b.dataset.sz;ex.clock=ex.size===2280;$("ck").checked=ex.clock;document.querySelectorAll("[data-sz]").forEach(x=>x.classList.toggle("on",x===b));refresh()});
+$("sv").onclick=()=>{
+  if(!exBlob)return;
+  const a=document.createElement("a");a.href=exURL;a.download=`edc-korea-2026-${DAYS[di].key.split(" ")[0]}.png`;document.body.appendChild(a);a.click();a.remove();
+};
+
+render();
+addEventListener("resize",fitNames);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitNames);
+</script>
+</body>
+</html>
