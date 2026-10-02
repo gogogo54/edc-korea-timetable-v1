@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EDC KOREA 2026 Timetable</title>
+<style>
+:root{--dim:#2a2740;--mu:#9b97b8}
+*{box-sizing:border-box;margin:0}
+body{background:linear-gradient(#4a1a5c,#1a0f2e 40%,#14102a);color:#fff;font-family:-apple-system,"Pretendard","Noto Sans KR",sans-serif;min-height:100vh;padding:env(safe-area-inset-top) 10px calc(env(safe-area-inset-bottom) + 20px)}
+h1{text-align:center;font-size:30px;font-weight:900;margin-top:24px;background:linear-gradient(90deg,#ffd23f,#ff5c8a,#b57cff);-webkit-background-clip:text;color:transparent}
+.sub{text-align:center;font-weight:800;font-size:18px;margin-top:6px}
+.cnt{text-align:center;color:var(--mu);font-size:13px;margin:4px 0 14px;letter-spacing:.5px}
+.tabs{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.tabs button{background:#ffffff18;color:#fff;border:0;border-radius:99px;padding:6px 14px;font-size:13px}
+.tabs button.on{background:#ff5c8a}
+.wrap{overflow-x:auto}
+.tt{display:grid;grid-template-columns:34px repeat(5,minmax(72px,1fr));gap:4px;min-width:360px}
+.hd{text-align:center;font-size:10px;font-weight:700;color:var(--mu);padding-bottom:6px;border-bottom:3px solid var(--c)}
+.hd b{display:block;font-size:12px;color:var(--c)}
+.col{position:relative;height:calc(var(--H)*1px)}
+.hr{position:absolute;left:0;font-size:10px;color:var(--mu);transform:translateY(-6px)}
+.b{position:absolute;left:0;right:0;border-radius:6px;overflow:hidden;background:var(--dim);color:#a9a5c6;cursor:pointer;border:1px solid #ffffff10}
+.b img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) brightness(.6)}
+.b::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 35%,#1a1733f0)}
+.b .tx{position:absolute;left:5px;right:5px;top:4px;bottom:4px;z-index:1;display:flex;flex-direction:column;justify-content:space-between;font-size:10px;font-weight:800;line-height:1.2}
+.b i{font-style:normal;font-weight:600;font-size:9px;background:#0008;border-radius:4px;padding:1px 4px;align-self:flex-start}
+.b.sel{border-color:var(--c);box-shadow:0 0 10px -2px var(--c);color:#fff}
+.b.sel img{filter:none}
+.b.sel::after{background:linear-gradient(transparent 30%,var(--c) 220%)}
+.b.conf{outline:2px solid #ff3b3b}
+.panel{margin-top:18px;background:#ffffff10;border-radius:14px;padding:12px}
+.panel h2{font-size:14px;margin-bottom:8px}
+.it{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #ffffff14;font-size:13px}
+.it .t{color:var(--mu);width:92px;flex:none;font-size:12px}
+.it .n{flex:1;font-weight:700}
+.it .s{font-size:10px;color:var(--mu)}
+.it a{color:#fff;background:#ffffff1c;border-radius:6px;padding:3px 7px;font-size:11px;text-decoration:none}
+.warn{color:#ff7b7b;font-size:12px;margin-top:3px}
+.empty{color:var(--mu);font-size:13px}
+.act{display:flex;gap:8px;margin-top:10px}
+.act button{flex:1;background:#ffffff18;border:0;color:#fff;border-radius:8px;padding:8px;font-size:12px}
+</style>
+</head>
+<body>
+<h1>EDC KOREA 2026</h1>
+<div class="sub" id="day"></div>
+<div class="cnt" id="cnt"></div>
+<div class="tabs" id="tabs"></div>
+<div class="wrap"><div class="tt" id="tt"></div></div>
+<div class="panel">
+  <h2>내 라인업</h2>
+  <div id="list"></div>
+  <div class="act"><button id="pre">기본 설정으로</button><button id="clr">전체 해제</button></div>
+</div>
+<script>
+/* ===== 데이터 (공식 타임테이블) =====
+   각 줄: "시작-종료 이름". 선택은 이름이 아니라 슬롯(요일+스테이지+순서) 단위라
+   같은 DJ가 여러 번 나와도 각각 따로 선택됩니다.
+   DJ 이미지: images/ 폴더에 이름을 소문자-하이픈으로 바꾼 파일을 넣으세요. (예: images/dj-snake.jpg)
+   다른 확장자/외부 URL을 쓰려면 아래 IMG에 "이름":"주소"를 추가하세요. */
+const IMG={};
+const STAGES=[["k","kinetic","FIELD","#ffc933"],["c","circuit","GROUNDS","#33d6ff"],["s","stereo","BLOOM","#ff4f9a"],["j","bionic","JUNGLE","#7dff3a"],["a","boombox","ART CAR","#b57cff"]];
+const DAYS=[
+{key:"10.3 토",title:"SATURDAY · OCT 3",preset:["JESSICA AUDIFFRED","OGUZ","DØMINA","R3HAB","ALLEYCVT","THE OUTLAW","ILLENIUM B2B DABIN","DJ SNAKE"],
+k:`17:00-18:00 HOHO ONE
+18:00-19:00 SUNGYOO
+19:00-20:00 MUZIE
+20:00-21:00 KREAM
+21:00-22:00 DIMENSION
+22:00-23:07 R3HAB
+23:12-00:27 SUBTRONICS
+00:30-01:45 ILLENIUM B2B DABIN
+01:45-03:00 DJ SNAKE`,
+c:`17:00-18:15 ASHIKO
+18:15-19:15 CHEEZ & YUKA
+19:15-20:15 WAY2_X
+20:15-21:15 JESSICA AUDIFFRED
+21:15-22:15 WILLIAM BLACK
+22:15-23:15 ALLEYCVT
+23:15-00:15 THE OUTLAW
+00:15-01:30 SVDDEN DEATH
+01:30-03:00 SARA LANDRY`,
+s:`17:00-18:00 AUREDE
+18:00-19:00 SSOMBO
+19:00-20:00 BASSKRAP
+20:00-21:00 OGUZ
+21:00-22:00 DØMINA
+22:00-23:15 ANIME
+23:15-00:30 BEN NICKY PRESENTS XTREME
+00:30-01:45 BRENNAN HEART
+01:45-03:00 COONE`,
+j:`17:00-18:15 ONE1
+18:15-19:30 DAVICO B3B DEMUK B3B DEPARTS
+19:30-20:45 YUUKI YOSHIYAMA
+20:45-22:00 IDEMI
+22:00-23:15 33 BELOW
+23:15-00:30 AYYBO
+00:30-01:45 RIORDAN
+01:45-03:00 WAX MOTIF`,
+a:`17:00-18:15 HONGTON_E
+18:15-19:30 MONSTER
+19:30-20:45 LOCO SOOUND
+20:45-22:00 BETTER
+22:00-23:15 SPACECOWBOY
+23:15-00:30 MUZIE
+00:30-01:45 ROM&BAAWLA
+01:45-03:00 SIM X PINO`},
+{key:"10.4 일",title:"SUNDAY · OCT 4",preset:[],
+k:`17:00-18:00 4URA
+18:00-19:00 SPECT
+19:00-20:00 PLUKO
+20:00-21:00 TOKIMONSTA
+21:00-22:00 ARGY
+22:00-23:15 ALOK
+23:15-00:25 W&W
+00:30-01:45 FISHER
+01:45-03:00 TIËSTO`,
+c:`17:00-18:00 ELIANA
+18:00-19:00 BLOSSO
+19:00-20:00 AREA X
+20:00-21:00 NO1 (HONGJOONG)
+21:00-22:05 BOU
+22:05-23:10 LEVEL UP
+23:10-00:25 TROYBOI
+00:25-01:40 NICO MORENO
+01:45-03:00 WOOLI`,
+s:`17:00-18:00 CASEPEAT X PURPLE RABBIT
+18:00-19:00 KAGO PENGCHI
+19:00-20:00 PAUL EUN
+20:00-21:00 MATTY RALPH
+21:00-22:15 ALY & FILA
+22:15-23:30 MARIE VAUNT
+23:30-00:45 COSMIC GATE
+00:45-01:45 VINI VICI
+01:45-03:00 NIFRA`,
+j:`17:00-18:15 SORAERE BROCKEN
+18:15-19:30 ZENA
+19:30-20:45 ASTRO VOIZE
+20:45-22:00 YOUNA
+22:00-23:15 KAYZO
+23:15-00:30 CHARLIE SPARKS
+00:30-01:45 LILLY PALMER
+01:45-03:00 999999999`,
+a:`17:00-18:15 KYSS
+18:15-19:30 HWAII
+19:30-20:45 MULE
+20:45-22:00 DJ HAO
+22:00-23:15 KWON YEONSU
+23:15-00:30 NAN AH
+00:30-01:45 PONGPONG
+01:45-03:00 KIANN`}
+];
+const PX=1.9,START=17*60,END=27*60,H=(END-START)*PX;
+const mm=t=>{let[h,m]=t.split(":").map(Number);if(h<17)h+=24;return h*60+m};
+const slug=n=>n.replace(/Ø/g,"O").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+// 슬롯 생성: 고유 id = 요일인덱스-스테이지-순서
+DAYS.forEach((d,di)=>{d.slots=[];STAGES.forEach(s=>d[s[0]].split("\n").forEach((l,i)=>{
+  const m=l.match(/^(\d\d:\d\d)-(\d\d:\d\d) (.+)$/);
+  d.slots.push({id:`${di}-${s[0]}-${i}`,st:s,a0:m[1],a1:m[2],s:mm(m[1]),e:mm(m[2]),n:m[3]});
+})});
+let di=0,sel;
+try{sel=JSON.parse(localStorage.getItem("edc26v2"))}catch(e){}
+if(!sel){sel=[];DAYS.forEach(d=>d.slots.forEach(s=>{if(d.preset.includes(s.n))sel.push(s.id)}))}
+const save=()=>{try{localStorage.setItem("edc26v2",JSON.stringify(sel))}catch(e){}};
+const imgSrc=n=>IMG[n]||`images/${slug(n)}.jpg`;
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+function render(){
+  const D=DAYS[di];
+  document.getElementById("day").textContent=D.title;
+  document.getElementById("tabs").innerHTML=DAYS.map((d,i)=>`<button class="${i===di?"on":""}" data-d="${i}">${d.key}</button>`).join("");
+  const mine=D.slots.filter(s=>sel.includes(s.id)).sort((a,b)=>a.s-b.s);
+  const conf=new Set();
+  mine.forEach((a,i)=>mine.slice(i+1).forEach(b=>{if(b.s<a.e&&a.s<b.e){conf.add(a.id);conf.add(b.id)}}));
+  document.getElementById("cnt").textContent=`MY LINEUP · ${mine.length} ARTISTS`;
+  let hrs="";for(let t=START;t<=END;t+=60)hrs+=`<div class="hr" style="top:${(t-START)*PX}px">${String(Math.floor(t/60)%24).padStart(2,"0")}:00</div>`;
+  let h="<div></div>"+STAGES.map(s=>`<div class="hd" style="--c:${s[3]}">${s[1]}<b>${s[2]}</b></div>`).join("")+`<div class="col" style="--H:${H}">${hrs}</div>`;
+  STAGES.forEach(s=>{
+    h+=`<div class="col" style="--H:${H};--c:${s[3]}">`+D.slots.filter(x=>x.st===s).map(x=>{
+      const on=sel.includes(x.id);
+      return `<div class="b ${on?"sel":""} ${on&&conf.has(x.id)?"conf":""}" data-id="${x.id}" style="top:${(x.s-START)*PX}px;height:${(x.e-x.s)*PX-2}px"><img src="${imgSrc(x.n)}" alt="" loading="lazy" onerror="this.remove()"><div class="tx"><i>${x.a0}–${x.a1}</i><span>${esc(x.n)}</span></div></div>`}).join("")+"</div>";
+  });
+  document.getElementById("tt").innerHTML=h;
+  document.getElementById("list").innerHTML=mine.length?mine.map(x=>{
+    const c=mine.filter(o=>o!==x&&o.s<x.e&&x.s<o.e).map(o=>o.n);
+    const q=encodeURIComponent(x.n.replace(/B[23]B| X /g," ")+" live set");
+    return `<div class="it"><div class="t">${x.a0}–${x.a1}</div><div class="n">${esc(x.n)}<div class="s">${x.st[1]} ${x.st[2]}</div>${c.length?`<div class="warn">⚠ 겹침: ${esc(c.join(", "))}</div>`:""}</div><a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=${q}">YouTube</a><a target="_blank" rel="noopener" href="https://open.spotify.com/search/${encodeURIComponent(x.n)}">Spotify</a></div>`}).join(""):`<div class="empty">타임테이블에서 아티스트를 눌러 선택하세요.</div>`;
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-d]"),b=e.target.closest(".b");
+  if(t){di=+t.dataset.d;render();return}
+  if(b){const i=sel.indexOf(b.dataset.id);i>=0?sel.splice(i,1):sel.push(b.dataset.id);save();render()}
+});
+document.getElementById("pre").onclick=()=>{const ids=DAYS[di].slots.map(s=>s.id);sel=sel.filter(i=>!ids.includes(i)).concat(DAYS[di].slots.filter(s=>DAYS[di].preset.includes(s.n)).map(s=>s.id));save();render()};
+document.getElementById("clr").onclick=()=>{const ids=DAYS[di].slots.map(s=>s.id);sel=sel.filter(i=>!ids.includes(i));save();render()};
+render();
+</script>
+</body>
+</html>
